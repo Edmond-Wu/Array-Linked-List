@@ -1,22 +1,20 @@
 package all;
 
-class Item 
-{
+class Item {
 	String name;
 	int next;
-	public Item(String name, int next) 
-	{
+	
+	public Item(String name, int next) {
 		this.name = name;
 		this.next = next;
 	}
-	public String toString() 
-	{
+	
+	public String toString() {
 		return "(" + name + "," + next + ")";
 	}
 }
 
-public class ArrayLL 
-{
+public class ArrayLL {
 
 	private Item[] all;
 	private int numItems;
@@ -26,12 +24,10 @@ public class ArrayLL
 
 	// Constructor, initializes all data fields, to represent 
 	// an empty Item array linked list of length maxItems
-	public ArrayLL(int maxItems)
-	{
+	public ArrayLL(int maxItems) {
 		all = new Item[maxItems];
 		avail = new int[maxItems];
-		for (int n = 0; n < avail.length; n++)
-		{
+		for (int n = 0; n < avail.length; n++) {
 			avail[n] = n;
 		}
 		numAvail = maxItems;
@@ -42,17 +38,15 @@ public class ArrayLL
 	// Adds a name to the front of this array linked list, in worst case O(1) time,
 	// and returns true.
 	// Returns false if the array is full, in O(1) time
-	public boolean addFront(String name) 
-	{
-		if (numAvail == 0)
+	public boolean addFront(String name) {
+		if (numAvail == 0) {
 			return false;
-		else
-		{
+		}
+		else {
 			int old = front;
 			front = avail[numAvail - 1];
 			
-			if (numItems == 0)
-			{
+			if (numItems == 0) {
 				all[front] = new Item(name, -1);
 			}
 			
@@ -66,12 +60,10 @@ public class ArrayLL
 	// Deletes the name that is at the front this array linked list, in worst case O(1) time,
 	// and returns the deleted name
 	// Returns null if the list is empty, in O(1) time
-	public String deleteFront() 
-	{
+	public String deleteFront() {
 		int oldFront = front;
 		
-		if (numAvail == all.length)
-		{
+		if (numAvail == all.length) {
 			return null;
 		}
 		
@@ -92,18 +84,15 @@ public class ArrayLL
 	// worst case O(n) time, i.e. time must not depend on the length of the all array
 	// (since the array might include available space not filled by active items)
 	// Also, avail array should be accessed/updated in O(1) time
-	public boolean delete(String name) 
-	{
-		if (numItems == 0)
-		{
+	public boolean delete(String name) {
+		if (numItems == 0) {
 			return false;
 		}
 		
 		int ptr = all[front].next;
 		int prev = front;
 		
-		if (all[front].name.equals(name))
-		{
+		if (all[front].name.equals(name)) {
 			avail[numAvail] = front;
 			all[prev] = null;
 			front = ptr;
@@ -112,10 +101,8 @@ public class ArrayLL
 			return true;
 		}
 		
-		for (int n = 0; n < numItems - 1; n++)
-		{
-			if (all[ptr].name.equals(name))
-			{
+		for (int n = 0; n < numItems - 1; n++) {
+			if (all[ptr].name.equals(name)) {
 				avail[numAvail] = ptr;
 				all[prev].next = all[ptr].next;
 				all[ptr] = null;
@@ -132,16 +119,13 @@ public class ArrayLL
 	// Checks if the given name is in this array linked list
 	// Note: If there are n items in the list, then this method must run in
 	// worst case O(n) time, i.e. time does not depend on the length of the all array.
-	public boolean contains(String name) 
-	{
-		if (numItems == 0)
-		{
+	public boolean contains(String name) {
+		if (numItems == 0) {
 			return false;
 		}
 		
 		int ptr = front;
-		for (int n = 0; n < numItems; n++)
-		{
+		for (int n = 0; n < numItems; n++) {
 			if (all[ptr].name.equals(name))
 				return true;
 			ptr = all[ptr].next;
@@ -155,26 +139,42 @@ public class ArrayLL
 	// Example: earth,mercury,venus
 	// Make sure there aren't any extra commas in your output.
 	// If the list is empty, you may print either nothing, or an empty string
-	public void printList() 
-	{
+	public void printList() {
 		int ptr = front;
-		if (numItems == 0)
+		if (numItems == 0) {
 			return;
-		for (int n = 0; n < numItems - 1; n++)
-		{
+		}
+		for (int n = 0; n < numItems - 1; n++) {
 			System.out.print(all[ptr].name + ",");
 			ptr = all[ptr].next;
 		}
-		System.out.print(all[ptr].name);
+		System.out.println(all[ptr].name);
 	}
 	
-	public void printArray() 
-	{
+	/**
+	 * Gets the number of items in the array
+	 * @return
+	 */
+	public int getNumItems() {
+		return numItems;
+	}
+	
+	/**
+	 * Gets the number of available spots
+	 * @return
+	 */
+	public int getNumAvail() {
+		return numAvail;
+	}
+	
+	public void printArray() {
 		
 	}
 	
-	public void printAvailableSpots()
-	{
-		
+	public void printAvailableSpots() {
+		for (int i = 0; i < avail.length - 1; i++) {
+			System.out.print(avail[i] + ",");
+		}
+		System.out.println(avail[avail.length - 1]);
 	}
 }
